@@ -29,24 +29,22 @@ import getNepkFromHostname
 import post_yaml_to_orch
 import getpass
 
-#gms_url = ""
+
+# Set post to True if you want to post the created yaml back to the Orchestrator, 
+# setting to false will only display it to the local machine
+post = True
 gms_url = input("Orch IP/Hostname?")
-#gms_user = "admin"
-#gms_password = "admin"
 yaml_text = ""
 dhcp_yaml_text = ""
-post = True
 dhcpInfo = False
 #
 orch = OrchHelper(gms_url)
-#orch.user = gms_user
 orch.user = input("Username? ")
-#orch.password = gms_password
 orch.password = getpass.getpass("Password?: ")
 orch.post("/authentication/loginToken", {"user": orch.user, "password":orch.password, "TempCode":False})
-token = input("Input Token: ")
+#If 2FA is not enabled, just hit enter
+token = input("Input Token if 2FA is enabled, otherwise hit Enter: ")
 orch.post("/authentication/login", {"user":orch.user, "password":orch.password, "token":token})
-#orch.login()
 
 hostname = input("What Appliance?")
 
